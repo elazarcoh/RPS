@@ -24,7 +24,9 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 0
 script = ExtResource( 1 )
-tile_size = Vector2( 100, 100 )
+tile_size = Vector2( 50, 50 )
+rows = 4
+cols = 4
 
 [node name="Board2" type="VBoxContainer" parent="." index="1"]
 
@@ -90,7 +92,7 @@ texture = ExtResource( 2 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Region", "Transform" ]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Board2/HBoxContainer3/Black" index="1"]
 
@@ -105,7 +107,6 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="White" type="Control" parent="Board2/HBoxContainer3" index="1"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0

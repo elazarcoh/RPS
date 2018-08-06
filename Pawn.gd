@@ -2,9 +2,15 @@ extends AnimatedSprite
 
 const WIDTH = 500
 const HEIGHT = 500
+export var directions = [Vector2(0,1),
+						Vector2(0,-1),
+						Vector2(1,0),
+						Vector2(-1,0)]
 
 var walk_frames = preload("res://anime_walk.tres")
 var _tile_size
+
+export var steps = 1
 
 func _init(tile_size):
 	self._tile_size = tile_size
@@ -23,7 +29,7 @@ func _ready():
 	self.scale = s
 	self.position.y = -HEIGHT * s.x * 0.5  # 0.5 fits well 
 
-func move_to(pos):
+func move(vec):
 	pass
 
 
