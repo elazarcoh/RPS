@@ -2,6 +2,7 @@ extends Control
 
 signal play_from_tile_clicked(index)
 signal play_to_tile_clicked(index)
+signal play_to_pawn_clicked(index)
 
 const BLACK_TILE = 0
 const WHITE_TILE = 1
@@ -62,6 +63,7 @@ func _get_sprite_region(row, col):
 func set_pawn(p):
 	self.pawn = p
 	self.add_child(self.pawn)
+	p.set_on_tile()
 
 func remove_pawn():
 	self.remove_child(self.pawn)
@@ -72,26 +74,29 @@ func _gui_input(ev):
 	if ev is InputEventMouseButton \
 	and ev.button_index == BUTTON_LEFT \
 	and ev.pressed:
-		print(str(index_on_board) + " clicked")
+#		print(str(index_on_board) + " clicked")
 		_handle_tile_click()
 
 func _handle_tile_click():
 	if !marked:
 		# player selected tile to play from
-		 _handle_play_from()
+		 _handle_play_from_click()
 	else:
 		# player selected tile to move into
-		_handle_play_to()
+		_handle_play_to_click()
 
-func _handle_play_from():
+func _handle_play_from_click():
 	# the player selected a tile to move its pawn from
 	if self.pawn != null:
-			emit_signal("play_from_tile_clicked", self.index_on_board)
+		emit_signal("play_from_tile_clicked", self.index_on_board)
 
-func _handle_play_to():
+func _handle_play_to_click():
 	# the player selected a tile to move its pawn to
 	if self.pawn == null:
-			emit_signal("play_to_tile_clicked", self.index_on_board)
+		emit_signal("play_to_tile_clicked", self.index_on_board)
+	else:
+		emit_signal("play_to_pawn_clicked", self.index_on_board)
+		
 
 func mark_tile():
 	self.sprite.region_rect = _get_sprite_region(MARKED, self.texture_color_index)
