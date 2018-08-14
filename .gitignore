@@ -1,3 +1,4 @@
 firebaseSources/functions/node_modules/
 firebaseSources/.idea
+exports
 *.log
