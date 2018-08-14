@@ -1,2 +1,3 @@
 firebaseSources/functions/node_modules/
+firebaseSources/.idea
 *.log
