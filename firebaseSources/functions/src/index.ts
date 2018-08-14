@@ -99,23 +99,8 @@ export const joinGame = functions.https.onRequest(async (request, response) => {
             return;
         }
 
-        // const gameData = gameSnapshot.data();
-
         const res = await join_game(gameSnapshot, p2Snapshot);
 
-        // if (gameData.players_count < 2) {
-        //     const game = {
-        //         status: gameData.status,
-        //         player2: player2Id,
-        //         players_count: gameData.players_count + 1
-        //     };
-        //     if (game.players_count === 2) {
-        //         game.status = GameStatus.READY;
-        //     }
-        //
-        //     await games_db.doc(gameId).update(game);
-        //
-        //     console.log(`game created: ${game}`);
         response.send(res);
     }
     catch (err) {
@@ -157,6 +142,8 @@ export const findAndJoinGame = functions.https.onRequest(async (request, respons
         response.status(500).send(`could not find/create a game for player ${player2Id}`);
     }
 });
+
+
 
 async function join_game(gameRef: FirebaseFirestore.DocumentSnapshot,
                          userRef: FirebaseFirestore.DocumentSnapshot) {

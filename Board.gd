@@ -14,10 +14,14 @@ var tile_from
 var tile_to
 
 
-func _ready():
-
-	var s = int(get_viewport().size.x / cols) * 0.9
+func _ready():	
+	var s = int(min(get_viewport().size.x, get_viewport().size.y) / cols) * 0.9
 	tile_size = Vector2(s,s)
+	
+	# this is a patch for centering the board
+	var top_margin = (get_viewport().size.y - 8 * s) / 2
+	get_parent().get_parent().get_node('BoardTopMargin') \
+	 .rect_min_size.y = top_margin
 	
 	var tile_color = tile_class.BLACK_TILE
 	# remove space between rows
