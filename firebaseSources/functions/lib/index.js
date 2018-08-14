@@ -107,6 +107,16 @@ exports.joinGame = functions.https.onRequest((request, response) => __awaiter(th
         response.status(500).send(`could not join game ${gameId}`);
     }
 }));
+// export const findGame = functions.https.onRequest(async (request, response) => {
+//
+//     const gameRef = await games_db.where('status', '==', GameStatus.CREATED).limit(1).get()[0];
+//
+//     await gameRef.update({status: GameStatus.WAITING});
+//
+//     console.log(`found game: ${gameRef.id}`);
+//     response.send(gameRef.id);
+//
+// });
 exports.findAndJoinGame = functions.https.onRequest((request, response) => __awaiter(this, void 0, void 0, function* () {
     const player2Id = request.query.user;
     try {
@@ -124,8 +134,10 @@ exports.findAndJoinGame = functions.https.onRequest((request, response) => __awa
         }
         else {
             // found a game. join it!
-            const gameRef = gameQuery[0];
+            const gameRef = gameQuery.docs[0];
+            console.log(`found game, joining...`);
             const res = yield join_game(gameRef, p2Snapshot);
+            // response.send(gameRef.id);
             response.send(res);
         }
     }

@@ -70,7 +70,7 @@ export const createGame = functions.https.onRequest(async (request, response) =>
         await gameRef.set(game);
 
         console.log(`new game created: ${gameRef}`);
-        response.send(gameRef.id);
+        response.send({id: gameRef.id, status: game.status});
     }
     catch (err) {
         console.log(err);
@@ -124,6 +124,8 @@ export const joinGame = functions.https.onRequest(async (request, response) => {
     }
 });
 
+
+
 export const findAndJoinGame = functions.https.onRequest(async (request, response) => {
 
     const player2Id = request.query.user;
@@ -144,9 +146,9 @@ export const findAndJoinGame = functions.https.onRequest(async (request, respons
             createGame(request, response);
         } else {
             // found a game. join it!
-            const gameRef = gameQuery[0];
+            const gameRef = gameQuery.docs[0];
+            console.log(`found game, joining...`);
             const res = await join_game(gameRef, p2Snapshot);
-
             response.send(res);
         }
     }
@@ -154,7 +156,6 @@ export const findAndJoinGame = functions.https.onRequest(async (request, respons
         console.log(err);
         response.status(500).send(`could not find/create a game for player ${player2Id}`);
     }
-
 });
 
 async function join_game(gameRef: FirebaseFirestore.DocumentSnapshot,
